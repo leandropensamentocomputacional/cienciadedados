@@ -1,4 +1,5 @@
 span{
     font-weight: bold;
-    color: var(--secundary-color);
+    color: white;
+    background-color: var(--secundary-color)
     }
