@@ -1,5 +1,4 @@
-import { getCSS } from "./common.js";
-
+import { getCSS, tickConfig } from "./common.js";
 async function quantidadeUsuariosPorRede() {
     const url = 'https://raw.githubusercontent.com/guilhermeonrails/api/main/numero-usuarios.json'
     const res = await fetch(url)
@@ -7,6 +6,7 @@ async function quantidadeUsuariosPorRede() {
     const nomeDasRedes = Object.keys(dados)
     const quantidadeDeUsuarios = Object.values(dados)
 
+    /*CONTRUÇÃO DO GRAFICO*/
     const data = [
         {
           x: nomeDasRedes,
@@ -14,10 +14,45 @@ async function quantidadeUsuariosPorRede() {
           type: 'bar',
           marker: {
             color: getCSS('--primary-color')
+            /*color: [green, blue, white, yellow, purple, grey]*/
           }
         }
       ]
-      
+    const layout = {
+        plot_bgcolor: getCSS('--bg-color'),
+        paper_bgcolor: getCSS('--bg-color'),
+        title: {
+            text: "Redes sociais com mais usuários no mundo",
+            x: 0,
+            font: {
+               color: getCSS('--primary-color'),
+               family: getCSS('--font'),
+               size: 30
+            }
+            },
+            xaxis: {
+                tickfont: tickConfig,
+                title: {
+                   text: "Nome das redes sociais",
+                   font: {
+                      color: getCSS('--secondary-color')
+                    }
+               }
+            },
+            yaxis: {
+                tickfont: tickConfig,
+                title: {
+                    text: 'bilhões de usuários ativos',
+                    font: {
+                        color: getCSS('--secondary-color')
+                    }
+                }
+            }
+         
+        }
+
+    
+
     
     /*const data = [
         {
@@ -33,7 +68,8 @@ async function quantidadeUsuariosPorRede() {
     const grafico = document.createElement('div')
     grafico.className = 'grafico'
     document.getElementById('graficos-container').appendChild(grafico)
-    Plotly.newPlot(grafico, data)
+    /*Plotly.newPlot(grafico, data)*//* ativa o background e coloca o título*/
+    Plotly.newPlot(grafico, data, layout)
 }
 
 quantidadeUsuariosPorRede()
